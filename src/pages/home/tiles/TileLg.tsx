@@ -33,9 +33,9 @@ function TileLg() {
    const control04 = useAnimationControls();
 
    const controls = [control01, control02, control03, control04];
-   const durations = [0.5, 0.6, 0.7, 0.8];
+   const durations = [0.75, 1, 0.75, 1];
    const easings = ["easeInOut", "easeOut", "easeIn", "easeInOut"];
-   const rotations = [0, 90, 180, 270];
+   const rotations = [-90, 90, -180, 270];
 
    useEffect(() => {
       if (isHovered) {
