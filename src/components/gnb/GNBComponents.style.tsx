@@ -13,6 +13,9 @@ const Container = styled.nav`
    display: flex;
    align-items: center;
    justify-content: center;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      height: 63px;
+   }
 `;
 
 const InnerContainer = styled(SafeArea)`

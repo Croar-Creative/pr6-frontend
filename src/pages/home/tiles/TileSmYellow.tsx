@@ -5,13 +5,19 @@ import { Tile } from "./TilesComponents.style";
 const Container = styled(Tile)`
    grid-area: tile4;
    background-color: ${({ theme }) => theme.color.yellow01};
+   aspect-ratio: 1/1;
 `;
 
-const InnerContainer = styled.div`
+export const InnerContainer = styled.div`
    padding: 32px;
    width: 100%;
    height: 100%;
    display: flex;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      padding: 22px 15px;
+      justify-content: flex-start;
+      align-items: flex-end;
+   }
 `;
 
 function TileSmYellow() {

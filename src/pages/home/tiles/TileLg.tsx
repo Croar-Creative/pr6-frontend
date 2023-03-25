@@ -2,7 +2,7 @@ import styled from "styled-components";
 import TileInnerText from "./TileInnerText";
 import { Tile } from "./TilesComponents.style";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const Container = styled(Tile)`
    grid-area: tile2;
@@ -15,15 +15,33 @@ const InnerContainer = styled.div`
    width: 100%;
    height: 100%;
    justify-content: space-between;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      justify-content: center;
+      align-items: center;
+      padding: 48px;
+      flex-direction: column;
+   }
 `;
 
 const SVGContainer = styled.div`
    display: grid;
    grid-template-columns: repeat(4, 1fr);
-   gap: 19px;
+   ${({ theme }) => theme.mediaQueries.desktop} {
+      position: absolute;
+      right: 32px;
+      gap: 19px;
+   }
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      gap: 11px;
+      margin-bottom: 18px;
+   }
 `;
 
-const SVG = styled(motion.svg)``;
+const SVG = styled(motion.svg)`
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      height: 22px;
+   }
+`;
 
 function TileLg() {
    const [isHovered, setIsHovered] = useState(false);
@@ -32,7 +50,11 @@ function TileLg() {
    const control03 = useAnimationControls();
    const control04 = useAnimationControls();
 
-   const controls = [control01, control02, control03, control04];
+   const controls = useMemo(
+      () => [control01, control02, control03, control04],
+      [control01, control02, control03, control04]
+   );
+
    const durations = [0.75, 1, 0.75, 1];
    const easings = ["easeInOut", "easeOut", "easeIn", "easeInOut"];
    const rotations = [-90, 90, -180, 270];
@@ -68,16 +90,10 @@ function TileLg() {
          onMouseLeave={() => setIsHovered(false)}
       >
          <InnerContainer>
-            <TileInnerText
-               caption="Blog"
-               title1="마케팅과 디자인 철학이 담긴"
-               title2="블로그를 확인 해보세요"
-            />
             <SVGContainer>
                <SVG
                   animate={control01}
                   xmlns="http://www.w3.org/2000/svg"
-                  width="45"
                   height="45"
                   viewBox="0 0 45 45"
                >
@@ -90,7 +106,6 @@ function TileLg() {
                <SVG
                   animate={control02}
                   xmlns="http://www.w3.org/2000/svg"
-                  width="45"
                   height="45"
                   viewBox="0 0 45 45"
                >
@@ -103,7 +118,6 @@ function TileLg() {
                <SVG
                   animate={control03}
                   xmlns="http://www.w3.org/2000/svg"
-                  width="45"
                   height="45"
                   viewBox="0 0 45 45"
                >
@@ -116,7 +130,6 @@ function TileLg() {
                <SVG
                   animate={control04}
                   xmlns="http://www.w3.org/2000/svg"
-                  width="45"
                   height="45"
                   viewBox="0 0 45 45"
                >
@@ -167,6 +180,11 @@ function TileLg() {
                   />
                </SVG>
             </SVGContainer>
+            <TileInnerText
+               caption="Blog"
+               title1="마케팅과 디자인 철학이 담긴"
+               title2="블로그를 확인 해보세요"
+            />
          </InnerContainer>
       </Container>
    );

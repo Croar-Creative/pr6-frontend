@@ -1,9 +1,10 @@
 import "styled-components";
-import { Color, Font } from "./theme";
+import { Color, Font, MediaQueries } from "./theme";
 
 declare module "styled-components" {
    export interface DefaultTheme {
       font: Font;
       color: Color;
+      mediaQueries: MediaQueries;
    }
 }

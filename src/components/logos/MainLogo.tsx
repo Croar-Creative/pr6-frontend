@@ -2,19 +2,17 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Svg = styled.svg`
-   height: 1.75rem;
+   height: 2rem;
    transition: transform 1s ease-in-out;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      height: 1.5rem;
+   }
 `;
 
 function MainLogo() {
    return (
       <Link to="/">
-         <Svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="168.617"
-            height="32.746"
-            viewBox="0 0 168.617 32.746"
-         >
+         <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168.617 32.746">
             <g transform="translate(58.957 248.631)">
                <g transform="translate(46.689 -248.631)">
                   <path

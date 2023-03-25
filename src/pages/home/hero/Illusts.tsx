@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import LeftPersonSrc from "assets/images/home/Pr6-Hero-Left-Person@2x.png";
+import LeftPersonMobileSrc from "assets/images/home/Pr6-Hero-Left-Person.png";
 import CenterPersonSrc from "assets/images/home/Pr6-Hero-Center-Person@2x.png";
+import CenterPersonMobileSrc from "assets/images/home/Pr6-Hero-Center-Person.png";
 import RightPersonSrc from "assets/images/home/Pr6-Hero-Right-Person@2x.png";
+import RightPersonMobileSrc from "assets/images/home/Pr6-Hero-Right-Person.png";
+
 import MagnifierSrc from "assets/images/home/Pr6-Hero-Magnifier@2x.png";
 import BlueCircleSrc from "assets/images/home/Pr6-Hero-Blue-Circle@2x.png";
 import BlueTriangleSrc from "assets/images/home/Pr6-Hero-Rounded-Triangle@2x.png";
 import YellowCircleSrc from "assets/images/home/Pr6-Hero-Yellow-Circle@2x.png";
 import GreyTwoCircleSrc from "assets/images/home/Pr6-Hero-Gray-Two-Circle@2x.png";
 import GreyBlueCirclesSrc from "assets/images/home/Pr6-Hero-Gray-and-Blue-Circle@2x.png";
+import { Desktop, Mobile } from "components/mediaquery/MediaQueryFilter";
 
 const Image = styled.img`
    position: absolute;
@@ -22,7 +27,7 @@ const LeftPerson = styled(motion(Image)).attrs({
       show: {
          opacity: 1,
          scale: 1,
-         left: 0,
+         left: "0%",
          bottom: "10%",
       },
    },
@@ -33,6 +38,25 @@ const LeftPerson = styled(motion(Image)).attrs({
    height: 285.3px;
    bottom: 34.1px;
    left: 0;
+`;
+
+const LeftPersonMobile = styled(motion(Image)).attrs({
+   src: LeftPersonMobileSrc,
+   alt: "leftPerson",
+   variants: {
+      hidden: { scale: 0.9, opacity: 0 },
+      show: {
+         opacity: 1,
+         scale: 1,
+      },
+   },
+   initial: "hidden",
+   animate: "show",
+   transition: { type: "spring", damping: 20, delay: 0.1, stiffness: 150 },
+})`
+   height: 168.99px;
+   bottom: 150px;
+   left: -20px;
 `;
 
 const CenterPerson = styled(motion(Image)).attrs({
@@ -54,6 +78,25 @@ const CenterPerson = styled(motion(Image)).attrs({
    bottom: 0px;
 `;
 
+const CenterPersonMobile = styled(motion(Image)).attrs({
+   src: CenterPersonSrc,
+   alt: "centerPersonMobile",
+   variants: {
+      hidden: { scale: 0.9, opacity: 0 },
+      show: {
+         opacity: 1,
+         scale: 1,
+      },
+   },
+   initial: "hidden",
+   animate: "show",
+   transition: { type: "spring", damping: 20, stiffness: 150 },
+})`
+   height: 156.09px;
+   bottom: 0px;
+   right: -30px;
+`;
+
 const RightPerson = styled(motion(Image)).attrs({
    src: RightPersonSrc,
    alt: "rightPerson",
@@ -72,15 +115,27 @@ const RightPerson = styled(motion(Image)).attrs({
 })`
    height: 350.47px;
    right: 0;
-   z-index: -1;
    bottom: 34.1px;
 `;
 
-export const Illusts = {
-   LeftPerson,
-   CenterPerson,
-   RightPerson,
-};
+const RightPersonMobile = styled(motion(Image)).attrs({
+   src: RightPersonMobileSrc,
+   alt: "rightPersonMobile",
+   variants: {
+      hidden: { scale: 0.9, opacity: 0 },
+      show: {
+         opacity: 1,
+         scale: 1,
+      },
+   },
+   initial: "hidden",
+   animate: "show",
+   transition: { type: "spring", damping: 20, delay: 0.13, stiffness: 150 },
+})`
+   height: 270.52px;
+   right: -20px;
+   bottom: 225px;
+`;
 
 const Magnifier = styled(motion(Image)).attrs({
    src: MagnifierSrc,
@@ -202,3 +257,28 @@ export const Particles = {
    GreyTwoCircle,
    GreyBlueCircles,
 };
+
+function Illusts() {
+   return (
+      <>
+         <Desktop>
+            <LeftPerson />
+            <CenterPerson />
+            <RightPerson />
+            <Magnifier />
+            <BlueCircle />
+            <BlueTriangle />
+            <YellowCircle />
+            <GreyTwoCircle />
+            <GreyBlueCircles />
+         </Desktop>
+         <Mobile>
+            <LeftPersonMobile />
+            <CenterPersonMobile />
+            <RightPersonMobile />
+         </Mobile>
+      </>
+   );
+}
+
+export default Illusts;

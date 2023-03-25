@@ -42,6 +42,7 @@ const color = {
    green01: "#1AAF4D",
    white01: "#FFFFFF",
    black01: "#000000",
+   gray03: "#F0F0F0",
    gray04: "#CCCCCC",
    gray05: "#AAAAAA",
    gray06: "#888888",
@@ -50,12 +51,19 @@ const color = {
    gray09: "#222222",
 };
 
+const mediaQueries = {
+   mobile: "@media screen and (max-width: 1023px)",
+   desktop: "@media screen and (min-width: 1024px)",
+};
+
 export type Color = typeof color;
 export type Font = typeof font;
+export type MediaQueries = typeof mediaQueries;
 
 const theme: DefaultTheme = {
    color,
    font,
+   mediaQueries,
 };
 
 export default theme;

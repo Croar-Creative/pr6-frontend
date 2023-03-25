@@ -9,6 +9,10 @@ const Container = styled.section`
    align-items: center;
    justify-content: flex-start;
    margin-top: 100px;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      margin-top: 50px;
+      overflow-x: hidden;
+   }
 `;
 
 const InnerContainer = styled(SafeArea)`
@@ -18,6 +22,10 @@ const InnerContainer = styled(SafeArea)`
    align-items: center;
    justify-content: flex-start;
    padding-bottom: 250px;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      align-items: flex-start;
+      padding-bottom: 440px;
+   }
 `;
 
 const TitleContainer = styled.div`
@@ -26,6 +34,9 @@ const TitleContainer = styled.div`
    align-items: center;
    justify-content: flex-start;
    margin-bottom: 2em;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      align-items: flex-start;
+   }
 `;
 
 const Title = styled(motion.h1).attrs({
@@ -40,11 +51,16 @@ const Title = styled(motion.h1).attrs({
 })`
    ${({ theme }) => theme.font.title2}
    font-weight: 500;
-   text-align: center;
-   line-height: 1.25em;
 
+   line-height: 1.25em;
    em {
       font-weight: 700;
+   }
+
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      text-align: left;
+      ${({ theme }) => theme.font.title4};
+      font-weight: 500;
    }
 `;
 
@@ -60,6 +76,11 @@ const SubTitle = styled(motion.h2).attrs({
 })`
    ${({ theme }) => theme.font.body1}
    margin-bottom: 1em;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      margin-top: 1em;
+      margin-bottom: 0;
+      font-size: 1.2em;
+   }
 `;
 
 const HeroSectionComponents = {

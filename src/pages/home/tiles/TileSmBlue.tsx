@@ -1,17 +1,12 @@
 import styled from "styled-components";
 import TileInnerText from "./TileInnerText";
 import { Tile } from "./TilesComponents.style";
+import { InnerContainer } from "./TileSmYellow";
 
 const Container = styled(Tile)`
    grid-area: tile3;
    background-color: ${({ theme }) => theme.color.blue01};
-`;
-
-const InnerContainer = styled.div`
-   padding: 32px;
-   width: 100%;
-   height: 100%;
-   display: flex;
+   aspect-ratio: 1/1;
 `;
 
 function TileSmBlue() {

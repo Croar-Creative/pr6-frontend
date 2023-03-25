@@ -21,6 +21,15 @@ const InnerContainer = styled(motion(SafeArea))`
       "tile1 tile2 tile2"
       "tile1 tile3 tile4";
    grid-gap: 32px;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 2fr 1fr 1fr;
+      grid-template-areas:
+         "tile1 tile1"
+         "tile2 tile2"
+         "tile3 tile4";
+      gap: 11px;
+   }
 `;
 
 export const Tile = styled(motion.div).attrs({

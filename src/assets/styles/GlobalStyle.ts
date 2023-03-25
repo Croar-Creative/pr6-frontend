@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
    *, *::before, *::after {
       box-sizing: border-box;
+      
    }
    :root {
       font-family: Pretendard, sans-serif;
@@ -10,10 +11,7 @@ export const GlobalStyle = createGlobalStyle`
       word-spacing: -0.05em;
       line-height: 0.5em;
       
-      @media screen and (min-width: 320px) and (max-width: 767px) {
-         font-size: 10px;
-      }
-      @media screen and (min-width: 768px) and (max-width: 1023px) {
+      @media screen and (max-width: 1023px) {
          font-size: 12px;
       }
       @media screen and (min-width: 1440px)  {
@@ -45,6 +43,7 @@ export const GlobalStyle = createGlobalStyle`
    footer, header, hgroup, menu, nav, section {
       display: block;
    }
+
    body {
       line-height: 1;
    }
