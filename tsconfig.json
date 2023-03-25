@@ -15,7 +15,8 @@
       "resolveJsonModule": true,
       "isolatedModules": true,
       "noEmit": true,
-      "jsx": "react-jsx"
+      "jsx": "react-jsx",
+      "typeRoots": ["src/@types"]
    },
-   "include": ["src", "src/components/gnb/GNB.tsx", "src/components/gnb/GNB.tsx"]
+   "include": ["src"]
 }

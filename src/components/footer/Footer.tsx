@@ -97,13 +97,13 @@ function Footer() {
                         <Vr /> 대표자 : 강우주 <Vr /> 소재지 : 서울특별시 강서구
                         공항대로 247 C동 (마곡동) <Vr /> 문의 : pr6@croar.co.kr
                         <br /> 사업자등록번호 : 717-48-00420{" "}
-                        <a href="#">[사업자정보확인]</a> <Vr />{" "}
+                        <a href="/">[사업자정보확인]</a> <Vr />{" "}
                         개인정보관리책임자 : 이호연 <Vr /> 통신판매업 신고번호 :
                         제2023–서울강서-0903호
                      </Infos>
                      <CopyRight>
                         Copyright © 2023 Project6. All rights reserved. <Vr />
-                        Brand Of <a href="#">Croar Creative</a> : Don’t be
+                        Brand Of <a href="/">Croar Creative</a> : Don’t be
                         afraid to experiment.
                      </CopyRight>
                   </InfosContainer>
@@ -118,14 +118,14 @@ function Footer() {
                         소재지 : 서울특별시 강서구 공항대로 247 C동 (마곡동)
                         <br /> 문의 : pr6@croar.co.kr
                         <br /> 사업자등록번호 : 717-48-00420{" "}
-                        <a href="#">[사업자정보확인]</a>
+                        <a href="/">[사업자정보확인]</a>
                         <br />
                         개인정보관리책임자 : 이호연 <br />
                         통신판매업 신고번호 : 제2023–서울강서-0903호
                      </Infos>
                      <CopyRight>
                         Copyright © 2023 Project6. All rights reserved. <br />
-                        Brand Of <a href="#">Croar Creative</a> : Don’t be
+                        Brand Of <a href="/">Croar Creative</a> : Don’t be
                         afraid to experiment.
                      </CopyRight>
                   </InfosContainer>

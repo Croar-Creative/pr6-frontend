@@ -79,7 +79,7 @@ const CenterPerson = styled(motion(Image)).attrs({
 `;
 
 const CenterPersonMobile = styled(motion(Image)).attrs({
-   src: CenterPersonSrc,
+   src: CenterPersonMobileSrc,
    alt: "centerPersonMobile",
    variants: {
       hidden: { scale: 0.9, opacity: 0 },

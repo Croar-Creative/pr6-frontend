@@ -55,9 +55,12 @@ function TileLg() {
       [control01, control02, control03, control04]
    );
 
-   const durations = [0.75, 1, 0.75, 1];
-   const easings = ["easeInOut", "easeOut", "easeIn", "easeInOut"];
-   const rotations = [-90, 90, -180, 270];
+   const durations = useMemo(() => [0.75, 1, 0.75, 1], []);
+   const easings = useMemo(
+      () => ["easeInOut", "easeOut", "easeIn", "easeInOut"],
+      []
+   );
+   const rotations = useMemo(() => [-90, 90, -180, 270], []);
 
    useEffect(() => {
       if (isHovered) {
