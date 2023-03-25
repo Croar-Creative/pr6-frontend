@@ -9,7 +9,6 @@ const Container = styled.nav`
    position: sticky;
    top: 0;
    left: 0;
-   z-index: 100;
    display: flex;
    align-items: center;
    justify-content: center;
@@ -17,6 +16,7 @@ const Container = styled.nav`
    ${({ theme }) => theme.mediaQueries.mobile} {
       height: 63px;
    }
+   z-index: 999;
 `;
 
 const InnerContainer = styled(SafeArea)`
@@ -52,6 +52,55 @@ const StyledLink = styled(motion(Link)).attrs({ layout: true })`
    justify-content: center;
 `;
 
+const MobileMenuContainer = styled(motion.ul)`
+   width: 100%;
+   height: 0;
+   background-color: ${({ theme }) => theme.color.white01};
+   position: absolute;
+   top: 63px;
+   left: 0;
+   z-index: 100;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: flex-start;
+   overflow: hidden;
+   padding-top: 21px;
+`;
+
+const MobileMenuOverlay = styled(motion.div)`
+   width: 100vw;
+   height: 100vh;
+   background-color: ${({ theme }) => theme.color.black01};
+   opacity: 0.5;
+   position: absolute;
+   top: 0;
+   left: 0;
+   z-index: 88888;
+`;
+
+const MobileStyledLink = styled(Link)`
+   width: 100%;
+   height: 100%;
+`;
+
+const MobileMenuItem = styled.li`
+   width: 100%;
+   height: 62px;
+   ${({ theme }) => theme.font.body3};
+   font-weight: 500;
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+`;
+
+const MobileDivider = styled.div`
+   width: 100%;
+   height: 1.5px;
+   margin: 1em 0;
+   background-color: ${({ theme }) => theme.color.gray03};
+`;
+
 const GlobalNavBarComponents = {
    Container,
    InnerContainer,
@@ -59,6 +108,11 @@ const GlobalNavBarComponents = {
    RightContainer,
    NavItem,
    StyledLink,
+   MobileStyledLink,
+   MobileMenuContainer,
+   MobileMenuItem,
+   MobileMenuOverlay,
+   MobileDivider,
 };
 
 export default GlobalNavBarComponents;
