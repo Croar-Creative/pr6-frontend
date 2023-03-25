@@ -13,6 +13,7 @@ const Container = styled.nav`
    display: flex;
    align-items: center;
    justify-content: center;
+   background-color: ${({ theme }) => theme.color.white01};
    ${({ theme }) => theme.mediaQueries.mobile} {
       height: 63px;
    }
