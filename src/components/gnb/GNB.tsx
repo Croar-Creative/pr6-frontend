@@ -1,10 +1,11 @@
 import GNBComponents from "./GNBComponents.style";
 import GNBItems from "./GNBItems";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useAnimationControls } from "framer-motion";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import MainLogo from "components/logos/MainLogo";
-import { useViewportSize } from "hooks/UseViewportSize";
+import { Desktop, Mobile } from "components/mediaquery/MediaQueryFilter";
+import SafeArea from "assets/styles/SafeArea";
 
 const Highlight = styled(motion.div)`
    position: absolute;
@@ -17,7 +18,12 @@ const Highlight = styled(motion.div)`
 
 function GNB() {
    const [selected, setSelected] = useState("");
-   const { width } = useViewportSize();
+   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+   const controls = useAnimationControls();
+
+   useEffect(() => {
+      controls.start({ height: isMobileMenuOpen ? 438 : 0 });
+   }, [isMobileMenuOpen, controls]);
 
    const renderHighlight = (itemTitle: string) =>
       itemTitle === selected ? <Highlight layoutId="highlight" /> : null;
@@ -27,8 +33,8 @@ function GNB() {
          <GNBComponents.InnerContainer>
             <GNBComponents.LeftContainer>
                <MainLogo />
-               {width >= 1024 &&
-                  GNBItems.map((item) => (
+               <Desktop>
+                  {GNBItems.map((item) => (
                      <GNBComponents.StyledLink
                         key={item.title}
                         to={item.link}
@@ -40,28 +46,87 @@ function GNB() {
                         </GNBComponents.NavItem>
                      </GNBComponents.StyledLink>
                   ))}
+               </Desktop>
             </GNBComponents.LeftContainer>
-            {width >= 1024 && (
-               <GNBComponents.RightContainer>
-                  <GNBComponents.StyledLink
-                     to="/login"
-                     onMouseOver={() => setSelected("로그인")}
-                  >
-                     <GNBComponents.NavItem>
-                        로그인{renderHighlight("로그인")}
-                     </GNBComponents.NavItem>
-                  </GNBComponents.StyledLink>
-                  <GNBComponents.StyledLink
-                     to="/projects"
-                     onMouseOver={() => setSelected("프로젝트")}
-                  >
-                     <GNBComponents.NavItem>
-                        프로젝트{renderHighlight("프로젝트")}
-                     </GNBComponents.NavItem>
-                  </GNBComponents.StyledLink>
-               </GNBComponents.RightContainer>
-            )}
+            <Desktop>
+               {
+                  <GNBComponents.RightContainer>
+                     <GNBComponents.StyledLink
+                        to="/login"
+                        onMouseOver={() => setSelected("로그인")}
+                     >
+                        <GNBComponents.NavItem>
+                           로그인{renderHighlight("로그인")}
+                        </GNBComponents.NavItem>
+                     </GNBComponents.StyledLink>
+                     <GNBComponents.StyledLink
+                        to="/projects"
+                        onMouseOver={() => setSelected("프로젝트")}
+                     >
+                        <GNBComponents.NavItem>
+                           프로젝트{renderHighlight("프로젝트")}
+                        </GNBComponents.NavItem>
+                     </GNBComponents.StyledLink>
+                  </GNBComponents.RightContainer>
+               }
+            </Desktop>
+            <Mobile>
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18.75"
+                  height="15"
+                  viewBox="0 0 18.75 15"
+                  onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                  style={{
+                     cursor: "pointer",
+                     padding: "1.2rem",
+                     transform: "translateX(0.5rem)",
+                     boxSizing: "content-box",
+                  }}
+               >
+                  <path
+                     id="hamburger"
+                     d="M17.812,10.438H.937a.938.938,0,1,1,0-1.875H17.812a.938.938,0,0,1,0,1.875Zm0-6.563H.937A.938.938,0,1,1,.937,2H17.812a.938.938,0,0,1,0,1.875Zm0,13.125H.937a.937.937,0,0,1,0-1.875H17.812a.937.937,0,0,1,0,1.875Z"
+                     transform="translate(0 -2)"
+                     fill="#222"
+                  />
+               </svg>
+            </Mobile>
          </GNBComponents.InnerContainer>
+
+         <GNBComponents.MobileMenuContainer animate={controls}>
+            <SafeArea>
+               {GNBItems.map((item) => (
+                  <GNBComponents.MobileStyledLink
+                     key={item.title}
+                     to={item.link}
+                     onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                     <GNBComponents.MobileMenuItem>
+                        {item.title}
+                     </GNBComponents.MobileMenuItem>
+                  </GNBComponents.MobileStyledLink>
+               ))}
+               <GNBComponents.MobileDivider />
+               <GNBComponents.MobileStyledLink
+                  to="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+               >
+                  <GNBComponents.MobileMenuItem>
+                     로그인
+                  </GNBComponents.MobileMenuItem>
+               </GNBComponents.MobileStyledLink>
+               <GNBComponents.MobileStyledLink
+                  to="/projects"
+                  onClick={() => setIsMobileMenuOpen(false)}
+               >
+                  <GNBComponents.MobileMenuItem>
+                     프로젝트
+                  </GNBComponents.MobileMenuItem>
+               </GNBComponents.MobileStyledLink>
+            </SafeArea>
+         </GNBComponents.MobileMenuContainer>
+         {/* {isMobileMenuOpen && <GNBComponents.MobileMenuOverlay />} */}
       </GNBComponents.Container>
    );
 }
