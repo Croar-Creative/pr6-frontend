@@ -14,6 +14,7 @@ const Highlight = styled(motion.div)`
    bottom: -0.5em;
    left: 0;
    background-color: ${({ theme }) => theme.color.yellow01};
+   z-index: 999;
 `;
 
 function GNB() {
