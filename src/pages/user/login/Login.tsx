@@ -10,54 +10,7 @@ import {
 import { googleAuth } from "../../../firebase";
 import googleLogo from "assets/images/users/login/logo_googleg_48dp@2x.png";
 import kakaoLogo from "assets/images/users/login/Pr6-kakao-symbol@2x.png";
-
-const Container = styled.div`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   margin: 85px 0;
-   ${({ theme }) => theme.mediaQueries.mobile} {
-      margin: 125px 0;
-   }
-`;
-
-const Header = styled.header`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   margin-bottom: 85px;
-   ${({ theme }) => theme.mediaQueries.mobile} {
-      margin-bottom: 65px;
-   }
-`;
-
-const Title = styled.h1`
-   ${({ theme }) => theme.font.title2}
-   ${({ theme }) => theme.mediaQueries.mobile} {
-      ${({ theme }) => theme.font.title4}
-   }
-`;
-
-const SubTitle = styled.h2`
-   ${({ theme }) => theme.font.body1}
-   ${({ theme }) => theme.mediaQueries.mobile} {
-      ${({ theme }) => theme.font.body3}
-   }
-   margin-top: 1em;
-`;
-
-const InnerContainer = styled.div`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   width: 328px;
-   ${({ theme }) => theme.mediaQueries.mobile} {
-      width: 266px;
-   }
-`;
+import UserComponents from "../UserComponents.style";
 
 const LoginForm = styled.form`
    display: flex;
@@ -92,9 +45,7 @@ const PasswordInput = styled(StyledInput).attrs({ type: "password" })`
    margin-bottom: 2em;
 `;
 
-const SubmitInput = styled(StyledInput).attrs({ type: "submit" })<{
-   error: boolean;
-}>`
+const SubmitInput = styled(StyledInput)<{ error: boolean }>`
    background-color: ${({ theme, error }) =>
       error ? theme.color.gray08 : theme.color.yellow01};
    color: ${({ theme, error }) =>
@@ -256,12 +207,14 @@ function Login() {
 
    return (
       <ContentWrap>
-         <Container>
-            <Header>
-               <Title>로그인</Title>
-               <SubTitle>서비스 이용을 위해 로그인이 필요합니다.</SubTitle>
-            </Header>
-            <InnerContainer>
+         <UserComponents.Container>
+            <UserComponents.Header>
+               <UserComponents.Title>로그인</UserComponents.Title>
+               <UserComponents.SubTitle>
+                  서비스 이용을 위해 로그인이 필요합니다.
+               </UserComponents.SubTitle>
+            </UserComponents.Header>
+            <UserComponents.InnerContainer>
                <LoginForm onSubmit={handleSubmit}>
                   <EmailInput
                      placeholder="example@example.com"
@@ -272,6 +225,7 @@ function Login() {
                      onChange={onChangePassword}
                   />
                   <SubmitInput
+                     type="submit"
                      value={error.length <= 0 ? "로그인" : error}
                      error={error.length > 0}
                   />
@@ -291,8 +245,8 @@ function Login() {
                      카카오 로그인
                   </KakaoLoginButton>
                </SocialLoginContainer>
-            </InnerContainer>
-         </Container>
+            </UserComponents.InnerContainer>
+         </UserComponents.Container>
       </ContentWrap>
    );
 }
