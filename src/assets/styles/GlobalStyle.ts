@@ -43,9 +43,11 @@ export const GlobalStyle = createGlobalStyle`
    footer, header, hgroup, menu, nav, section {
       display: block;
    }
-
    body {
       line-height: 1;
+   }
+   #root {
+      min-height: 100vh;
    }
    ol, ul {
       list-style: none;
