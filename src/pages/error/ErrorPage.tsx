@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import NotFoundIllust from "assets/images/404/Pr6-404man-illust@2x.png";
-import NotFoundIllustMobile from "assets/images/404/Pr6-404man-illust.png";
 import LinkedButton from "components/buttons/LinkedButton";
 import { Desktop, Mobile } from "components/mediaquery/MediaQueryFilter";
 import ContentWrap from "components/ContentWrap";
@@ -22,7 +20,7 @@ const Title = styled.h1`
    text-align: center;
 `;
 
-const SubTitle = styled.span`
+const SubTitle = styled.pre`
    text-align: center;
    ${({ theme }) => theme.font.body2};
    ${({ theme }) => theme.mediaQueries.mobile} {
@@ -45,23 +43,32 @@ const ButtonContainer = styled.div`
    justify-content: center;
    align-items: center;
    position: absolute;
-   bottom: -1em;
+   bottom: -7em;
 `;
 
-function NotFound() {
+interface ErrorPageProps {
+   title: string;
+   subTitle: string;
+   imageSrc: string;
+   mobileImgSrc: string;
+}
+
+function ErrorPage({
+   title,
+   subTitle,
+   imageSrc,
+   mobileImgSrc,
+}: ErrorPageProps) {
    return (
       <ContentWrap>
          <InnerContainer>
-            <Title>존재하지 않는 페이지입니다.</Title>
-            <SubTitle>
-               이용에 불편을 드려 죄송합니다.
-               <br /> 본 페이지는 존재하지 않는 페이지입니다.
-            </SubTitle>
+            <Title>{title}</Title>
+            <SubTitle>{subTitle}</SubTitle>
             <Desktop>
-               <Illust src={NotFoundIllust} alt="404" />
+               <Illust src={imageSrc} alt="404" />
             </Desktop>
             <Mobile>
-               <IllustMobile src={NotFoundIllustMobile} alt="404" />
+               <IllustMobile src={mobileImgSrc} alt="404" />
             </Mobile>
             <ButtonContainer>
                <LinkedButton color="yellow01" to="/">
@@ -73,4 +80,4 @@ function NotFound() {
    );
 }
 
-export default NotFound;
+export default ErrorPage;
