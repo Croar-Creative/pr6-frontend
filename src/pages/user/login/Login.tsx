@@ -16,6 +16,10 @@ const Container = styled.div`
    flex-direction: column;
    align-items: center;
    justify-content: center;
+   margin: 85px 0;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      margin: 125px 0;
+   }
 `;
 
 const Header = styled.header`
@@ -23,7 +27,10 @@ const Header = styled.header`
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   margin: 85px 0;
+   margin-bottom: 85px;
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      margin-bottom: 65px;
+   }
 `;
 
 const Title = styled.h1`
@@ -118,9 +125,6 @@ const SocialLoginContainer = styled.div`
    flex-direction: column;
    margin-top: 4.5em;
    width: 100%;
-   ${({ theme }) => theme.mediaQueries.mobile} {
-      margin-bottom: 180px;
-   }
 `;
 
 const SocialLoginTitle = styled.h3`
