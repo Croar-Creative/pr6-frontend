@@ -6,6 +6,10 @@ import styled from "styled-components";
 import MainLogo from "components/logos/MainLogo";
 import { Desktop, Mobile } from "components/mediaquery/MediaQueryFilter";
 import SafeArea from "assets/styles/SafeArea";
+import { useRecoilValue } from "recoil";
+import { loginState } from "recoil/LoginState";
+import { signOut } from "firebase/auth";
+import { googleAuth } from "../../firebase";
 
 const Highlight = styled(motion.div)`
    position: absolute;
@@ -20,6 +24,7 @@ const Highlight = styled(motion.div)`
 function GNB() {
    const [selected, setSelected] = useState("");
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+   const isLoggedIn = useRecoilValue(loginState);
    const controls = useAnimationControls();
 
    useEffect(() => {
@@ -53,11 +58,15 @@ function GNB() {
                {
                   <GNBComponents.RightContainer>
                      <GNBComponents.StyledLink
-                        to="/login"
+                        to={isLoggedIn ? "" : "/login"}
                         onMouseOver={() => setSelected("로그인")}
+                        onClick={() => {
+                           isLoggedIn && signOut(googleAuth);
+                        }}
                      >
                         <GNBComponents.NavItem>
-                           로그인{renderHighlight("로그인")}
+                           {isLoggedIn ? "로그아웃" : "로그인"}
+                           {renderHighlight("로그인")}
                         </GNBComponents.NavItem>
                      </GNBComponents.StyledLink>
                      <GNBComponents.StyledLink
@@ -110,11 +119,14 @@ function GNB() {
                ))}
                <GNBComponents.MobileDivider />
                <GNBComponents.MobileStyledLink
-                  to="/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  to={isLoggedIn ? "" : "/login"}
+                  onClick={() => {
+                     setIsMobileMenuOpen(false);
+                     isLoggedIn && signOut(googleAuth);
+                  }}
                >
                   <GNBComponents.MobileMenuItem>
-                     로그인
+                     {isLoggedIn ? "로그아웃" : "로그인"}
                   </GNBComponents.MobileMenuItem>
                </GNBComponents.MobileStyledLink>
                <GNBComponents.MobileStyledLink
@@ -127,7 +139,6 @@ function GNB() {
                </GNBComponents.MobileStyledLink>
             </SafeArea>
          </GNBComponents.MobileMenuContainer>
-         {/* {isMobileMenuOpen && <GNBComponents.MobileMenuOverlay />} */}
       </GNBComponents.Container>
    );
 }

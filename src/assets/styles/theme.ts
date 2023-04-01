@@ -42,6 +42,7 @@ const color = {
    green01: "#1AAF4D",
    white01: "#FFFFFF",
    black01: "#000000",
+   gray02: "#EEEEEE",
    gray03: "#F0F0F0",
    gray04: "#CCCCCC",
    gray05: "#AAAAAA",
