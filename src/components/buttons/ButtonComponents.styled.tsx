@@ -26,6 +26,11 @@ const Container = styled.button<{ color: keyof Color }>`
       transform: scale(0.98);
       filter: brightness(0.95);
    }
+
+   &:hover {
+      transform: scale(1.02);
+   }
+
    ${({ theme }) => theme.mediaQueries.mobile} {
       padding: 1em 1.4em;
       ${({ theme }) => theme.font.body3};
