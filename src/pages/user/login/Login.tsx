@@ -1,15 +1,13 @@
 import ContentWrap from "components/ContentWrap";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import styled, { keyframes } from "styled-components";
 import {
-   getAuth,
    signInWithEmailAndPassword,
    signInWithPopup,
    GoogleAuthProvider,
 } from "firebase/auth";
 import { googleAuth } from "../../../firebase";
-import axios from "axios";
 import googleLogo from "assets/images/users/login/logo_googleg_48dp@2x.png";
 import kakaoLogo from "assets/images/users/login/Pr6-kakao-symbol@2x.png";
 
@@ -87,11 +85,17 @@ const PasswordInput = styled(StyledInput).attrs({ type: "password" })`
    margin-bottom: 2em;
 `;
 
-const SubmitInput = styled(StyledInput).attrs({ type: "submit" })`
-   background-color: ${({ theme }) => theme.color.yellow01};
+const SubmitInput = styled(StyledInput).attrs({ type: "submit" })<{
+   error: boolean;
+}>`
+   background-color: ${({ theme, error }) =>
+      error ? theme.color.gray08 : theme.color.yellow01};
+   color: ${({ theme, error }) =>
+      error ? theme.color.white01 : theme.color.black01};
    cursor: pointer;
-   transition: transform 0.2s ease-in-out;
-
+   transition: all 0.2s ease-in-out;
+   animation: ${({ error }) => (error ? Shake : "")} 0.82s
+      cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
    :hover {
       transform: scale(1.02);
    }
@@ -160,6 +164,25 @@ const Symbol = styled.img`
    margin-right: 10px;
 `;
 
+const Shake = keyframes`
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+
+`;
+
 interface AuthError {
    code:
       | "auth/invalid-email"
@@ -171,6 +194,8 @@ interface AuthError {
 function Login() {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+   const [error, setError] = useState("");
+   const navigate = useNavigate();
 
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -183,21 +208,29 @@ function Login() {
          );
 
          console.log(user);
-      } catch (error: any) {
-         console.log(error.code);
+      } catch (error) {
+         const authError = error as AuthError;
+
+         if (authError.code === "auth/invalid-email")
+            setError("유효하지 않은 이메일입니다.");
+         else if (authError.code === "auth/wrong-password")
+            setError("비밀번호가 일치하지 않습니다.");
+         else if (authError.code === "auth/user-not-found")
+            setError("존재하지 않는 이메일입니다.");
+         else if (authError.code === "auth/missing-password")
+            setError("비밀번호를 입력해주세요.");
+         else setError("알 수 없는 오류가 발생했습니다.");
       }
    };
 
    const handleGoogleLogin = async () => {
       const provider = new GoogleAuthProvider();
       try {
-         const result = await signInWithPopup(googleAuth, provider);
+         const { user } = await signInWithPopup(googleAuth, provider);
+         const jwt = await user.getIdToken();
 
-         const credential = GoogleAuthProvider.credentialFromResult(result);
-         const token = credential?.accessToken;
-         const user = result.user;
-
-         console.log(token, user);
+         localStorage.setItem("accessToken", jwt);
+         navigate("/");
       } catch (error) {
          console.error(error);
       }
@@ -208,10 +241,12 @@ function Login() {
    };
 
    const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setError("");
       setEmail(event.target.value);
    };
 
    const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setError("");
       setPassword(event.target.value);
    };
 
@@ -232,7 +267,10 @@ function Login() {
                      placeholder="password"
                      onChange={onChangePassword}
                   />
-                  <SubmitInput value="로그인" />
+                  <SubmitInput
+                     value={error.length <= 0 ? "로그인" : error}
+                     error={error.length > 0}
+                  />
                </LoginForm>
                <UserContainer>
                   <Link to="/sign-up">회원가입</Link>

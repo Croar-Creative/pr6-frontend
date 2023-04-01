@@ -6,8 +6,12 @@ import Login from "./user/login/Login";
 
 import NotFound from "./error/NotFound";
 import UnderConstruction from "./error/UnderConstruction";
+import { useRecoilValue } from "recoil";
+import { loginState } from "recoil/LoginState";
 
 function Router() {
+   const isLoggedIn = useRecoilValue(loginState);
+
    return (
       <BrowserRouter>
          <GNB />
