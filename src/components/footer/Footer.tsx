@@ -5,11 +5,12 @@ import styled from "styled-components";
 
 const Wrapper = styled.footer`
    width: 100%;
+   bottom: 0;
 `;
 
 const Container = styled.div`
    width: 100%;
-   height: 190px;
+   min-height: 190px;
    border-radius: 20px 20px 0 0;
    background-color: ${({ theme }) => theme.color.gray03};
    display: flex;
@@ -76,7 +77,7 @@ const CopyRight = styled.p`
    }
 `;
 
-const Vr = styled.div`
+const Vr = styled.span`
    display: inline-block;
    width: 1px;
    height: 1em;
