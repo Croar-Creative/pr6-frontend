@@ -11,7 +11,10 @@ const Svg = styled.svg`
 
 function MainLogo() {
    return (
-      <Link to="/">
+      <Link
+         to="/"
+         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
          <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168.617 32.746">
             <g transform="translate(58.957 248.631)">
                <g transform="translate(46.689 -248.631)">
