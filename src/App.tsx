@@ -22,7 +22,7 @@ function App() {
             setIsLoggedIn(false);
          }
       });
-   }, []);
+   }, [setIsLoggedIn]);
 
    return (
       <ThemeProvider theme={theme}>
