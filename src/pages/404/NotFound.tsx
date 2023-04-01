@@ -16,14 +16,20 @@ const InnerContainer = styled.div`
 
 const Title = styled.h1`
    ${({ theme }) => theme.font.title2};
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      ${({ theme }) => theme.font.title4};
+   }
    text-align: center;
 `;
 
 const SubTitle = styled.span`
    text-align: center;
    ${({ theme }) => theme.font.body2};
+   ${({ theme }) => theme.mediaQueries.mobile} {
+      ${({ theme }) => theme.font.body3};
+   }
    margin: 1em 0;
-   line-height: 26.25px;
+   line-height: 21.25px;
 `;
 
 const Illust = styled.img`
