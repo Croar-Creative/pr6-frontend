@@ -1,6 +1,6 @@
 import { Color } from "assets/styles/theme";
 import { Link } from "react-router-dom";
-import Container from "./ButtonComponents.styled";
+import Container from "./Button.styled";
 
 type LinkedButtonProps = {
    color: keyof Color;

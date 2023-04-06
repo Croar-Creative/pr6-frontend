@@ -10,7 +10,7 @@ import {
 import { googleAuth } from "../../../firebase";
 import googleLogo from "assets/images/users/login/logo_googleg_48dp@2x.png";
 import kakaoLogo from "assets/images/users/login/Pr6-kakao-symbol@2x.png";
-import UserComponents from "../UserComponents.style";
+import LoginComponents from "./Login.styled";
 
 const LoginForm = styled.form`
    display: flex;
@@ -207,14 +207,14 @@ function Login() {
 
    return (
       <ContentWrap>
-         <UserComponents.Container>
-            <UserComponents.Header>
-               <UserComponents.Title>로그인</UserComponents.Title>
-               <UserComponents.SubTitle>
+         <LoginComponents.Container>
+            <LoginComponents.Header>
+               <LoginComponents.Title>로그인</LoginComponents.Title>
+               <LoginComponents.SubTitle>
                   서비스 이용을 위해 로그인이 필요합니다.
-               </UserComponents.SubTitle>
-            </UserComponents.Header>
-            <UserComponents.InnerContainer>
+               </LoginComponents.SubTitle>
+            </LoginComponents.Header>
+            <LoginComponents.InnerContainer>
                <LoginForm onSubmit={handleSubmit}>
                   <EmailInput
                      placeholder="example@example.com"
@@ -245,8 +245,8 @@ function Login() {
                      카카오 로그인
                   </KakaoLoginButton>
                </SocialLoginContainer>
-            </UserComponents.InnerContainer>
-         </UserComponents.Container>
+            </LoginComponents.InnerContainer>
+         </LoginComponents.Container>
       </ContentWrap>
    );
 }

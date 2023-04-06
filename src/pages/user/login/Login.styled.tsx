@@ -48,7 +48,7 @@ const InnerContainer = styled.div`
    }
 `;
 
-const UserComponents = {
+const LoginComponents = {
    Container,
    Header,
    Title,
@@ -56,4 +56,4 @@ const UserComponents = {
    InnerContainer,
 };
 
-export default UserComponents;
+export default LoginComponents;

@@ -1,4 +1,4 @@
-import GNBComponents from "./GNBComponents.style";
+import GNBComponents from "./GNB.styled";
 import GNBItems from "./GNBItems";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import MainLogo from "components/logos/MainLogo";
 import { Desktop, Mobile } from "components/mediaquery/MediaQueryFilter";
 import SafeArea from "assets/styles/SafeArea";
 import { useRecoilValue } from "recoil";
-import { loginState } from "recoil/LoginState";
+import { loginState } from "recoil/LoginState.atom";
 import { signOut } from "firebase/auth";
 import { googleAuth } from "../../firebase";
 

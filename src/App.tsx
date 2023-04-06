@@ -6,7 +6,7 @@ import theme from "assets/styles/theme";
 import { googleAuth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useSetRecoilState } from "recoil";
-import { loginState } from "recoil/LoginState";
+import { loginState } from "recoil/LoginState.atom";
 import { useEffect } from "react";
 
 function App() {

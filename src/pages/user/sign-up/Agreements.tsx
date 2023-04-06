@@ -1,6 +1,6 @@
 import ContentWrap from "components/ContentWrap";
 import styled from "styled-components";
-import UserComponents from "../UserComponents.style";
+import UserComponents from "../login/Login.styled";
 import { ReactElement, useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
