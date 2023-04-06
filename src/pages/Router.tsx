@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import GNB from "components/gnb/GNB";
 import Home from "./home/Home";
 import Footer from "components/footer/Footer";
@@ -6,6 +6,8 @@ import Login from "./user/login/Login";
 
 import NotFound from "./error/NotFound";
 import UnderConstruction from "./error/UnderConstruction";
+import Agreements from "./user/sign-up/Agreements";
+
 // import { useRecoilValue } from "recoil";
 // import { loginState } from "recoil/LoginState";
 
@@ -23,7 +25,8 @@ function Router() {
             </Route>
 
             <Route path="sign-up">
-               <Route index element={<UnderConstruction />} />
+               <Route path="agreements" element={<Agreements />} />
+               <Route path="" element={<Navigate to="/sign-up/agreements" />} />
             </Route>
 
             <Route path="find-user">
