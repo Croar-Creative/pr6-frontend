@@ -1,6 +1,6 @@
 import { TextInput } from "components/inputs/text/Text";
 import { HTMLInputTypeAttribute } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled from "styled-components";
 
 const InputWrap = styled.div`
    display: flex;
@@ -22,54 +22,40 @@ const InputLabelText = styled.span`
    ${({ theme }) => theme.font.body3}
 `;
 
-const NoticText = styled.span<{ type: MessageType | undefined }>`
+const NoticeText = styled.span<{ hasError: boolean }>`
    ${({ theme }) => theme.font.detail1}
-   ${({ theme, type }) =>
-      type === "success"
-         ? {
-              color: theme.color.green01,
-           }
-         : type === "error"
-         ? {
-              color: theme.color.red01,
-           }
-         : ""}
+   ${({ theme, hasError }) =>
+      hasError
+         ? `color: ${theme.color.red01};`
+         : `color: ${theme.color.green01};`}
 `;
 
-export type MessageType = "error" | "success" | null;
+// export type MessageType = FieldError | "success" | null;
 
 interface LabeledTextInputProps {
    label: string;
-   message?: string;
-   messageType?: MessageType;
    inputType: HTMLInputTypeAttribute;
+   error?: string;
    placeholder?: string;
-   value: string;
-   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+   name: string;
+   value: any;
+   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 function LabeledTextInput({
    label,
-   message,
-   messageType,
    inputType,
-   placeholder,
-   value,
-   onChange,
+   error,
+   ...props
 }: LabeledTextInputProps) {
    return (
       <InputWrap>
          <InputLabel>
             <InputLabelText>{label}</InputLabelText>
-            <NoticText type={messageType}>{message || ""}</NoticText>
+            <NoticeText hasError={!!error}>{error}</NoticeText>
          </InputLabel>
-         <TextInput
-            type={inputType}
-            placeholder={placeholder}
-            messageType={messageType}
-            value={value}
-            onChange={onChange}
-         />
+         <TextInput type={inputType} {...props} />
       </InputWrap>
    );
 }

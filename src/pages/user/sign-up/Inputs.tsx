@@ -5,11 +5,11 @@ import {
    RadioElementType,
    RadioProps,
 } from "components/inputs/radio/Radio.props";
-import LabeledTextInput, {
-   MessageType,
-} from "pages/user/sign-up/components/LabeledTextInput";
+import LabeledTextInput from "pages/user/sign-up/components/LabeledTextInput";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 const Title = styled.h2`
    ${({ theme }) => theme.font.title3};
@@ -106,7 +106,6 @@ interface InputProps {
    inputType: string;
    placeholder: string;
    message?: string;
-   messageType?: MessageType;
    fulfilled: boolean;
    value: string;
 }
@@ -118,7 +117,6 @@ interface ButtonProps {
 
 export interface SignUpProps {
    message: string;
-   messageType: MessageType;
    value: string;
    valid: boolean;
 }
@@ -127,461 +125,203 @@ function Inputs() {
    const [userType, setUserType] = useState(USERTYPE[0].id);
    const [signUpRoute, setSignUpRoute] = useState(SIGNUPROUTE[0].id);
 
-   const [email, setEmail] = useState<SignUpProps>({
-      message: "",
-      messageType: null,
-      value: "",
-      valid: false,
+   const [formValues, setFormValues] = useState({
+      email: { value: "", valid: false },
+      password: { value: "", valid: false },
+      passwordCheck: { value: "", valid: false },
+      name: { value: "", valid: false },
+      companyName: { value: "", valid: false },
+      managerName: { value: "", valid: false },
+      phoneNumber: { value: "", valid: false },
+      authNumber: { value: "", valid: false },
    });
-   const [password, setPassword] = useState<SignUpProps>({
-      message: "",
-      messageType: null,
-      value: "",
-      valid: false,
-   });
-   const [passwordCheck, setPasswordCheck] = useState<SignUpProps>({
-      message: "",
-      messageType: null,
-      value: "",
-      valid: false,
-   });
-   const [name, setName] = useState<SignUpProps>({
-      message: "",
-      messageType: null,
-      value: "",
-      valid: false,
-   });
-   const [companyName, setCompanyName] = useState<SignUpProps>({
-      message: "",
-      messageType: null,
-      value: "",
-      valid: false,
-   });
-   const [managerName, setManagerName] = useState<SignUpProps>({
-      message: "",
-      messageType: null,
-      value: "",
-      valid: false,
-   });
-   const [phoneNumber, setPhoneNumber] = useState<SignUpProps>({
-      message: "",
-      messageType: null,
-      value: "",
-      valid: false,
-   });
-   const [authNumber, setAuthNumber] = useState<SignUpProps>({
-      message: "",
-      messageType: null,
-      value: "",
-      valid: false,
-   });
-
-   useEffect(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-   }, []);
-
-   const validateInputs = () => {
-      const emailReg =
-         /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-      const passwordReg =
-         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-      const nameReg = /^[가-힣]{2,}$/;
-      const phoneNumberReg = /^\d{3}-\d{3,4}-\d{4}$/;
-
-      if (email.value === "") {
-         setEmail((prev) => ({
-            ...prev,
-            message: "이메일을 입력해주세요.",
-            messageType: "error",
-         }));
-      } else if (!emailReg.test(email.value)) {
-         setEmail((prev) => ({
-            ...prev,
-            message: "이메일 형식이 올바르지 않습니다.",
-            messageType: "error",
-         }));
-      } else {
-         setEmail((prev) => ({
-            ...prev,
-            message: "",
-            messageType: null,
-            valid: true,
-         }));
-      }
-
-      if (password.value === "") {
-         setPassword((prev) => ({
-            ...prev,
-            message: "비밀번호를 입력해주세요.",
-            messageType: "error",
-         }));
-      } else if (!passwordReg.test(password.value)) {
-         setPassword((prev) => ({
-            ...prev,
-            message: "비밀번호 형식이 올바르지 않습니다.",
-            messageType: "error",
-         }));
-      } else {
-         setPassword((prev) => ({
-            ...prev,
-            message: "사용 가능한 비밀번호입니다.",
-            messageType: "success",
-            valid: true,
-         }));
-      }
-
-      if (passwordCheck.value === "") {
-         setPasswordCheck((prev) => ({
-            ...prev,
-            message: "비밀번호를 입력해주세요.",
-            messageType: "error",
-         }));
-      } else if (password.value !== passwordCheck.value) {
-         setPasswordCheck((prev) => ({
-            ...prev,
-            message: "비밀번호가 일치하지 않습니다.",
-            messageType: "error",
-         }));
-      } else {
-         setPasswordCheck((prev) => ({
-            ...prev,
-            message: "비밀번호가 일치합니다.",
-            messageType: "success",
-            valid: true,
-         }));
-      }
-
-      if (userType === "INDIVIDUAL") {
-         setCompanyName((prev) => ({
-            ...prev,
-            message: "",
-            messageType: null,
-            valid: true,
-         }));
-         setManagerName((prev) => ({
-            ...prev,
-            message: "",
-            messageType: null,
-            valid: true,
-         }));
-
-         if (name.value === "") {
-            setName((prev) => ({
-               ...prev,
-               message: "이름을 입력해주세요.",
-               messageType: "error",
-            }));
-         } else if (!nameReg.test(name.value)) {
-            setName((prev) => ({
-               ...prev,
-               message: "이름 형식이 올바르지 않습니다.",
-               messageType: "error",
-            }));
-         } else {
-            setName((prev) => ({
-               ...prev,
-               message: "",
-               messageType: null,
-               valid: true,
-            }));
-         }
-      } else if (userType === "COMPANY") {
-         setName((prev) => ({
-            ...prev,
-            message: "",
-            messageType: null,
-            valid: true,
-         }));
-
-         if (companyName.value === "") {
-            setCompanyName((prev) => ({
-               ...prev,
-               message: "회사명을 입력해주세요.",
-               messageType: "error",
-            }));
-         } else {
-            setCompanyName((prev) => ({
-               ...prev,
-               message: "",
-               messageType: null,
-               valid: true,
-            }));
-         }
-
-         if (managerName.value === "") {
-            setManagerName((prev) => ({
-               ...prev,
-               message: "담당자명을 입력해주세요.",
-               messageType: "error",
-            }));
-         } else if (!nameReg.test(managerName.value)) {
-            setManagerName((prev) => ({
-               ...prev,
-               message: "담당자명 형식이 올바르지 않습니다.",
-               messageType: "error",
-            }));
-         } else {
-            setManagerName((prev) => ({
-               ...prev,
-               message: "",
-               messageType: null,
-               valid: true,
-            }));
-         }
-      }
-
-      if (phoneNumber.value === "") {
-         setPhoneNumber((prev) => ({
-            ...prev,
-            message: "휴대폰 번호를 입력해주세요.",
-            messageType: "error",
-         }));
-      } else if (!phoneNumberReg.test(phoneNumber.value)) {
-         setPhoneNumber((prev) => ({
-            ...prev,
-            message: "휴대폰 번호 형식이 올바르지 않습니다.",
-            messageType: "error",
-         }));
-      } else {
-         setPhoneNumber((prev) => ({
-            ...prev,
-            message: "",
-            messageType: null,
-            valid: true,
-         }));
-      }
-
-      if (!authNumber.valid) {
-         setAuthNumber((prev) => ({
-            ...prev,
-            message: "전화번호 인증을 해주세요.",
-            messageType: "error",
-         }));
-      }
-   };
-
-   const handleAuthNumberSend = async () => {};
-
-   const handleAuthNumberCheck = async () => {
-      const authNumberReg = /^\d{6}$/;
-
-      if (authNumber.value === "") {
-         setAuthNumber((prev) => ({
-            ...prev,
-            message: "인증번호를 입력해주세요.",
-            messageType: "error",
-         }));
-      }
-      // fail
-      if (!authNumberReg.test(authNumber.value)) {
-         setAuthNumber((prev) => ({
-            ...prev,
-            message: "인증번호 형식이 올바르지 않습니다.",
-            messageType: "error",
-         }));
-      }
-      // success
-      else {
-         setAuthNumber((prev) => ({
-            ...prev,
-            message: "인증되었습니다.",
-            messageType: "success",
-            valid: true,
-         }));
-      }
-   };
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      validateInputs();
-      if (
-         [
-            email,
-            password,
-            passwordCheck,
-            name,
-            companyName,
-            managerName,
-            phoneNumber,
-            authNumber,
-         ].every((el) => el.valid)
-      ) {
-         console.log("회원가입 성공");
-      }
+      console.log(formValues);
    };
-
-   useEffect(() => {
-      console.log(userType);
-   }, [userType]);
 
    return (
       <ContentWrap>
          <Title>회원가입</Title>
-         <Form onSubmit={handleSubmit}>
-            <InputWrap>
-               <LabeledTextInput
-                  label="이메일 (아이디)"
-                  inputType="text"
-                  placeholder="example@example.com"
-                  message={email.message}
-                  messageType={email.messageType}
-                  value={email.value}
-                  onChange={(e) => {
-                     setEmail((prev) => ({
-                        ...prev,
-                        value: e.target.value,
-                     }));
-                  }}
-               />
-            </InputWrap>
-            <InputWrap>
-               <LabeledTextInput
-                  label="비밀번호"
-                  inputType="password"
-                  placeholder="새 비밀번호"
-                  message={password.message}
-                  messageType={password.messageType}
-                  value={password.value}
-                  onChange={(e) => {
-                     setPassword((prev) => ({
-                        ...prev,
-                        value: e.target.value,
-                     }));
-                  }}
-               />
-               <PasswordMessage>
-                  비밀번호는 8자리 이상, 32자리 이하의 영문 대소문자, 숫자,
-                  특수문자를 모두 포함해야합니다.
-               </PasswordMessage>
-            </InputWrap>
-            <InputWrap>
-               <LabeledTextInput
-                  label="비밀번호 확인"
-                  inputType="password"
-                  placeholder="새 비밀번호 확인"
-                  message={passwordCheck.message}
-                  messageType={passwordCheck.messageType}
-                  value={passwordCheck.value}
-                  onChange={(e) => {
-                     setPasswordCheck((prev) => ({
-                        ...prev,
-                        value: e.target.value,
-                     }));
-                  }}
-               />
-            </InputWrap>
-            <RadioWrap>
-               <Radio
-                  groupName="userType"
-                  elements={USERTYPE}
-                  setSelectValue={setUserType}
-               />
-            </RadioWrap>
-            {userType === "INDIVIDUAL" ? (
-               <InputWrap>
-                  <LabeledTextInput
-                     label="이름"
-                     inputType="text"
-                     placeholder="이름"
-                     message={name.message}
-                     messageType={name.messageType}
-                     value={name.value}
-                     onChange={(e) => {
-                        setName((prev) => ({
-                           ...prev,
-                           value: e.target.value,
-                        }));
-                     }}
-                  />
-               </InputWrap>
-            ) : (
-               <>
+         <Formik
+            validateOnBlur
+            initialValues={{
+               email: "",
+               password: "",
+               passwordCheck: "",
+               userType: "INDIVIDUAL",
+               name: "",
+               companyName: "",
+               managerName: "",
+               phoneNumber: "",
+               authNumber: "",
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+               setTimeout(() => {
+                  alert(JSON.stringify(values, null, 2));
+                  setSubmitting(false);
+               }, 1000);
+            }}
+            validationSchema={Yup.object().shape({
+               email: Yup.string()
+                  .required("필수 입력사항입니다.")
+                  .email("유효한 이메일이 아닙니다."),
+               password: Yup.string()
+                  .required("필수 입력사항입니다.")
+                  .min(8, "비밀번호는 8자 이상이어야 합니다.")
+                  .matches(
+                     /^(?=.*\\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])$/,
+                     "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다."
+                  ),
+               passwordCheck: Yup.string()
+                  .required("필수 입력사항입니다.")
+                  .oneOf(
+                     [Yup.ref("password")],
+                     "비밀번호가 일치하지 않습니다."
+                  ),
+               name: Yup.string().when("userType", () => {
+                  if (userType === "INDIVIDUAL") {
+                     return Yup.string().required("필수 입력사항입니다.");
+                  } else {
+                     return Yup.string().notRequired();
+                  }
+               }),
+               companyName: Yup.string().when("userType", () => {
+                  if (userType === "COMPANY") {
+                     return Yup.string().required("필수 입력사항입니다.");
+                  } else {
+                     return Yup.string().notRequired();
+                  }
+               }),
+               managerName: Yup.string().when("userType", () => {
+                  if (userType === "COMPANY") {
+                     return Yup.string().required("필수 입력사항입니다.");
+                  } else {
+                     return Yup.string().notRequired();
+                  }
+               }),
+               phoneNumber: Yup.string()
+                  .required("필수 입력사항입니다.")
+                  .matches(/^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/),
+
+               authNumber: Yup.string().required("필수 입력사항입니다."),
+            })}
+         >
+            {(props) => (
+               <form onSubmit={handleSubmit}>
                   <InputWrap>
                      <LabeledTextInput
-                        label="회사명"
+                        label="이메일 (아이디)"
                         inputType="text"
-                        placeholder="회사명"
-                        message={companyName.message}
-                        messageType={companyName.messageType}
-                        value={companyName.value}
-                        onChange={(e) => {
-                           setCompanyName((prev) => ({
-                              ...prev,
-                              value: e.target.value,
-                           }));
-                        }}
+                        placeholder="example@example.com"
+                        {...props.getFieldProps("email")}
+                        {...props.getFieldMeta("email")}
                      />
                   </InputWrap>
                   <InputWrap>
                      <LabeledTextInput
-                        label="담당자명"
-                        inputType="text"
-                        placeholder="담당자명"
-                        message={managerName.message}
-                        messageType={managerName.messageType}
-                        value={managerName.value}
-                        onChange={(e) => {
-                           setManagerName((prev) => ({
-                              ...prev,
-                              value: e.target.value,
-                           }));
-                        }}
+                        label="비밀번호"
+                        inputType="password"
+                        placeholder="새 비밀번호"
+                        {...props.getFieldProps("password")}
+                        {...props.getFieldMeta("password")}
+                     />
+                     <PasswordMessage>
+                        비밀번호는 8자리 이상, 32자리 이하의 영문 대소문자,
+                        숫자, 특수문자를 모두 포함해야합니다.
+                     </PasswordMessage>
+                  </InputWrap>
+                  <InputWrap>
+                     <LabeledTextInput
+                        label="비밀번호 확인"
+                        inputType="password"
+                        placeholder="비밀번호 확인"
+                        {...props.getFieldProps("passwordCheck")}
+                        {...props.getFieldMeta("passwordCheck")}
                      />
                   </InputWrap>
-               </>
+                  <RadioWrap>
+                     <Radio
+                        groupName="userType"
+                        elements={USERTYPE}
+                        setSelectValue={setUserType}
+                     />
+                  </RadioWrap>
+                  {userType === "INDIVIDUAL" ? (
+                     <InputWrap>
+                        <LabeledTextInput
+                           label="이름"
+                           inputType="text"
+                           placeholder="이름"
+                           {...props.getFieldProps("name")}
+                           {...props.getFieldMeta("name")}
+                        />
+                     </InputWrap>
+                  ) : (
+                     <>
+                        <InputWrap>
+                           <LabeledTextInput
+                              label="기업명"
+                              inputType="text"
+                              placeholder="기업명"
+                              {...props.getFieldProps("companyName")}
+                              {...props.getFieldMeta("companyName")}
+                           />
+                        </InputWrap>
+                        <InputWrap>
+                           <LabeledTextInput
+                              label="담당자명"
+                              inputType="text"
+                              placeholder="담당자명"
+                              {...props.getFieldProps("managerName")}
+                              {...props.getFieldMeta("managerName")}
+                           />
+                        </InputWrap>
+                     </>
+                  )}
+                  <InputWrap>
+                     <LabeledTextInput
+                        label="휴대폰 번호"
+                        inputType="text"
+                        placeholder="휴대폰 번호"
+                        {...props.getFieldProps("phoneNumber")}
+                        {...props.getFieldMeta("phoneNumber")}
+                     />
+                  </InputWrap>
+                  <ButtonWrap>
+                     <Button type="button">인증번호 발송</Button>
+                  </ButtonWrap>
+                  <InputWrap>
+                     <LabeledTextInput
+                        label="인증번호"
+                        inputType="text"
+                        placeholder="인증번호"
+                        {...props.getFieldProps("authNumber")}
+                        {...props.getFieldMeta("authNumber")}
+                     />
+                  </InputWrap>
+                  <ButtonWrap>
+                     <Button type="button">인증번호 확인</Button>
+                  </ButtonWrap>
+                  <RadioWrap>
+                     <RadioLabel>
+                        <span>회원가입 경로</span>
+                     </RadioLabel>
+                     <Radio
+                        groupName="signUpRoute"
+                        elements={SIGNUPROUTE}
+                        setSelectValue={setSignUpRoute}
+                     />
+                  </RadioWrap>
+                  <ButtonWrap>
+                     <Button type="submit" disabled={props.isSubmitting}>
+                        회원 가입
+                     </Button>
+                  </ButtonWrap>
+               </form>
             )}
-            <InputWrap>
-               <LabeledTextInput
-                  label="휴대폰 번호"
-                  inputType="text"
-                  placeholder="휴대폰 번호"
-                  message={phoneNumber.message}
-                  messageType={phoneNumber.messageType}
-                  value={phoneNumber.value}
-                  onChange={(e) => {
-                     setPhoneNumber((prev) => ({
-                        ...prev,
-                        value: e.target.value,
-                     }));
-                  }}
-               />
-            </InputWrap>
-
-            <ButtonWrap>
-               <Button>인증번호 발송</Button>
-            </ButtonWrap>
-            <InputWrap>
-               <LabeledTextInput
-                  label="인증번호"
-                  inputType="text"
-                  placeholder="인증번호"
-                  message={authNumber.message}
-                  messageType={authNumber.messageType}
-                  value={authNumber.value}
-                  onChange={(e) => {
-                     setAuthNumber((prev) => ({
-                        ...prev,
-                        value: e.target.value,
-                     }));
-                  }}
-               />
-            </InputWrap>
-            <ButtonWrap>
-               <Button>인증번호 확인</Button>
-            </ButtonWrap>
-            <RadioWrap>
-               <RadioLabel>회원가입 경로</RadioLabel>
-               <Radio
-                  groupName="signUpRoute"
-                  elements={SIGNUPROUTE}
-                  setSelectValue={setSignUpRoute}
-               />
-            </RadioWrap>
-
-            <ButtonWrap>
-               <Button type="submit">회원 가입</Button>
-            </ButtonWrap>
-         </Form>
+         </Formik>
       </ContentWrap>
    );
 }
