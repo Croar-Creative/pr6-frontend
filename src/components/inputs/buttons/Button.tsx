@@ -1,5 +1,5 @@
-import ButtonProps from "./ButtonProps";
-import Container from "./ButtonComponents.styled";
+import ButtonProps from "./Button.props";
+import Container from "./Button.styled";
 
 const COLORS = ["black", "white", "red"];
 export type ButtonColors = typeof COLORS[number];

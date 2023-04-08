@@ -6,7 +6,7 @@ export type GNBItemsType = {
 
 const GNBItems: GNBItemsType[] = [
    {
-      title: "브랜드 소개",
+      title: "서비스 소개",
       link: "/brand",
    },
    {

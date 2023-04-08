@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LinkedButton from "components/buttons/LinkedButton";
+import LinkedButton from "components/inputs/buttons/LinkedButton";
 import { Desktop, Mobile } from "components/mediaquery/MediaQueryFilter";
 import ContentWrap from "components/ContentWrap";
 

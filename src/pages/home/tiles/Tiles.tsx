@@ -1,5 +1,5 @@
 import TileLg from "./TileLg";
-import TilesComponents from "./TilesComponents.style";
+import TilesComponents from "./Tiles.styled";
 import TileSmBlue from "./TileSmBlue";
 import TileSmYellow from "./TileSmYellow";
 import TileXl from "./TileXL";

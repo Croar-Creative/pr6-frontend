@@ -1,6 +1,6 @@
-import LinkedButton from "components/buttons/LinkedButton";
-import HeroSectionComponents from "./HeroSectionComponents.style";
-import Illusts  from "./Illusts";
+import LinkedButton from "components/inputs/buttons/LinkedButton";
+import HeroSectionComponents from "./HeroSection.styled";
+import Illusts from "./Illusts";
 import { Desktop, Mobile } from "components/mediaquery/MediaQueryFilter";
 
 function HeroSection() {

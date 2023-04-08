@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Tile } from "./TilesComponents.style";
+import { Tile } from "./Tiles.styled";
 import TitleIllustSrc from "assets/images/home/Pr6-Tile-Illust1@2x.png";
 
 const Container = styled(Tile)`
