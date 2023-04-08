@@ -1,10 +1,6 @@
-/* eslint-disable no-duplicate-case */
 import ContentWrap from "components/ContentWrap";
 import Radio from "components/inputs/radio/Radio";
-import {
-   RadioElementType,
-   RadioProps,
-} from "components/inputs/radio/Radio.props";
+import { RadioElementType } from "components/inputs/radio/Radio.props";
 import LabeledTextInput from "components/inputs/text/LabeledTextInput";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -128,6 +124,7 @@ export interface SignUpFormValues {
 
 function Inputs() {
    const [userType, setUserType] = useState(USERTYPE[0].id);
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const [signUpRoute, setSignUpRoute] = useState(SIGNUPROUTE[0].id);
    const [isAllValid, setIsAllValid] = useState(false);
    const navigate = useNavigate();
@@ -328,6 +325,7 @@ function Inputs() {
                <Button>인증하기</Button>
             </ButtonWrap>
             <RadioWrap>
+               <RadioLabel>가입 경로</RadioLabel>
                <Radio
                   groupName="signUpRoute"
                   elements={SIGNUPROUTE}
