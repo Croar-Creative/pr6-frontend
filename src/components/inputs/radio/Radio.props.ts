@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 export type RadioElementType = {
    id: string;
    label: string;
@@ -6,5 +7,5 @@ export type RadioElementType = {
 export interface RadioProps {
    groupName: string;
    elements: RadioElementType;
-   setSelectValue: React.Dispatch<React.SetStateAction<string>>;
+   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }

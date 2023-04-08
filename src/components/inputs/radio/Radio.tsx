@@ -1,8 +1,7 @@
-import { ChangeEvent } from "react";
 import { RadioProps } from "./Radio.props";
 import RadioComponents from "./Radio.styled";
 
-function Radio({ groupName, elements, setSelectValue }: RadioProps) {
+function Radio({ groupName, elements, onChange }: RadioProps) {
    return (
       <RadioComponents.RadioGroup>
          {elements.map((el, i) => {
@@ -11,9 +10,7 @@ function Radio({ groupName, elements, setSelectValue }: RadioProps) {
                   <RadioComponents.StyledRadio
                      name={groupName}
                      value={el.id}
-                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setSelectValue(e.target.value);
-                     }}
+                     onChange={onChange}
                      defaultChecked={i === 0}
                   />
                   <RadioComponents.CustomRadio>

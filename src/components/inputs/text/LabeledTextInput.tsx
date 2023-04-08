@@ -1,5 +1,5 @@
 import { TextInput } from "components/inputs/text/Text";
-import { HTMLInputTypeAttribute } from "react";
+import { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 const InputWrap = styled.div`
@@ -22,40 +22,41 @@ const InputLabelText = styled.span`
    ${({ theme }) => theme.font.body3}
 `;
 
-const NoticeText = styled.span<{ hasError: boolean }>`
+const NoticeText = styled.span`
    ${({ theme }) => theme.font.detail1}
-   ${({ theme, hasError }) =>
-      hasError
-         ? `color: ${theme.color.red01};`
-         : `color: ${theme.color.green01};`}
 `;
 
 // export type MessageType = FieldError | "success" | null;
 
-interface LabeledTextInputProps {
+export interface LabeledTextInputProps
+   extends InputHTMLAttributes<HTMLInputElement> {
    label: string;
-   inputType: HTMLInputTypeAttribute;
-   error?: string;
-   placeholder?: string;
-   name: string;
-   value: any;
-   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+   option?: {
+      detail?: {
+         message: string;
+         color: string;
+      };
+      border?: {
+         color: string;
+      };
+   };
 }
 
-function LabeledTextInput({
-   label,
-   inputType,
-   error,
-   ...props
-}: LabeledTextInputProps) {
+function LabeledTextInput({ label, option, ...props }: LabeledTextInputProps) {
    return (
       <InputWrap>
          <InputLabel>
             <InputLabelText>{label}</InputLabelText>
-            <NoticeText hasError={!!error}>{error}</NoticeText>
+            <NoticeText style={{ color: option?.detail?.color }}>
+               {option?.detail?.message}
+            </NoticeText>
          </InputLabel>
-         <TextInput type={inputType} {...props} />
+         <TextInput
+            {...props}
+            style={{
+               outlineColor: option?.border?.color,
+            }}
+         />
       </InputWrap>
    );
 }
