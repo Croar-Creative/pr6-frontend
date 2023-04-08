@@ -16,6 +16,7 @@ import {
    validatePhoneNumber,
    validateRequired,
 } from "./Validators";
+import { useNavigate } from "react-router-dom";
 
 const Title = styled.h2`
    ${({ theme }) => theme.font.title3};
@@ -129,6 +130,7 @@ function Inputs() {
    const [userType, setUserType] = useState(USERTYPE[0].id);
    const [signUpRoute, setSignUpRoute] = useState(SIGNUPROUTE[0].id);
    const [isAllValid, setIsAllValid] = useState(false);
+   const navigate = useNavigate();
 
    const [formValues, setFormValues] = useState({
       email: { value: "", valid: false },
@@ -143,6 +145,8 @@ function Inputs() {
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       console.log(formValues);
+      // 성공한 경우
+      navigate("/sign-up/success");
    };
 
    useEffect(() => {
