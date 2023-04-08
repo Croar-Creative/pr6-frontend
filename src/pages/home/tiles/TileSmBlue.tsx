@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import TileInnerText from "./TileInnerText";
-import { Tile } from "./TilesComponents.style";
+import { Tile } from "./Tiles.styled";
 import { InnerContainer } from "./TileSmYellow";
 
 const Container = styled(Tile)`

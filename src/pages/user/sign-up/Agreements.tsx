@@ -1,9 +1,10 @@
 import ContentWrap from "components/ContentWrap";
 import styled from "styled-components";
-import UserComponents from "../UserComponents.style";
+import UserComponents from "../login/Login.styled";
 import { ReactElement, useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import scrollTo from "../function/scrollTo";
 
 const TermContainer = styled.div`
    max-width: 530px;
@@ -296,6 +297,12 @@ function Agreements() {
          })
       );
    }, [terms]);
+
+   useEffect(() => {
+      if (allChecked) {
+         scrollTo({ to: "bottom" });
+      }
+   }, [allChecked]);
 
    return (
       <ContentWrap>

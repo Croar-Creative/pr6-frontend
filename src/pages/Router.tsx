@@ -7,6 +7,8 @@ import Login from "./user/login/Login";
 import NotFound from "./error/NotFound";
 import UnderConstruction from "./error/UnderConstruction";
 import Agreements from "./user/sign-up/Agreements";
+import Inputs from "./user/sign-up/Inputs";
+import Success from "./user/sign-up/Success";
 
 // import { useRecoilValue } from "recoil";
 // import { loginState } from "recoil/LoginState";
@@ -26,6 +28,8 @@ function Router() {
 
             <Route path="sign-up">
                <Route path="agreements" element={<Agreements />} />
+               <Route path="inputs" element={<Inputs />} />
+               <Route path="success" element={<Success />} />
                <Route path="" element={<Navigate to="/sign-up/agreements" />} />
             </Route>
 
